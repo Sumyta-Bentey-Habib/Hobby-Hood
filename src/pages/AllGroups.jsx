@@ -1,9 +1,9 @@
 import React from 'react';
-
+import NavBar from '../components/NavBar';
 const AllGroups = () => {
     return (
         <div>
-            all groups
+            <NavBar></NavBar>
         </div>
     );
 };
