@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import { Outlet } from 'react-router-dom';
 import Slider from '../components/slider/Slider';
 import Hero from '../components/Hero';
+import Footer from '../components/Footer';
 
 const HomeLayout = () => {
     return (
@@ -11,6 +12,7 @@ const HomeLayout = () => {
             <Hero></Hero>
             <Slider className="mt-2"></Slider>
             <Outlet></Outlet>
+            <Footer></Footer>
             
         </div>
     );
