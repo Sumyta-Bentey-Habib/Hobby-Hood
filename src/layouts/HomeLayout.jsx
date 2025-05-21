@@ -1,11 +1,13 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 import { Outlet } from 'react-router-dom';
+import Slider from '../components/slider/Slider';
 
 const HomeLayout = () => {
     return (
         <div>
             <NavBar />
+            <Slider className="mt-2"></Slider>
             <Outlet></Outlet>
             
         </div>

@@ -1,0 +1,69 @@
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './slider.css';
+
+import slider1 from '../../../public/slider-image/slide1.jpg';
+import slider2 from '../../../public/slider-image/slide2.jpg';
+import slider3 from '../../../public/slider-image/slide3.jpg';
+import slider4 from '../../../public/slider-image/slide4.jpg';
+import slider5 from '../../../public/slider-image/slide5.jpg';
+
+const Slider = () => {
+  return (
+    <div className="pt-24 px-4 max-w-6xl mx-auto">
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={30}
+        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        modules={[Pagination, Autoplay]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <img
+            src={slider1}
+            alt="Slide 1"
+            className="w-full h-[250px] object-cover rounded-xl"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src={slider2}
+            alt="Slide 2"
+            className="w-full h-[250px] object-cover rounded-xl"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src={slider3}
+            alt="Slide 3"
+            className="w-full h-[250px] object-cover rounded-xl"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src={slider4}
+            alt="Slide 4"
+            className="w-full h-[250px] object-cover rounded-xl"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src={slider5}
+            alt="Slide 5"
+            className="w-full h-[250px] object-cover rounded-xl"
+          />
+        </SwiperSlide>
+      </Swiper>
+    </div>
+  );
+};
+
+export default Slider;
