@@ -5,11 +5,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './slider.css';
 
-import slider1 from '../../../public/slider-image/slide1.jpg';
-import slider2 from '../../../public/slider-image/slide2.jpg';
-import slider3 from '../../../public/slider-image/slide3.jpg';
-import slider4 from '../../../public/slider-image/slide4.jpg';
-import slider5 from '../../../public/slider-image/slide5.jpg';
+import slider1 from '../../assets/slider-image/slide1.jpg';
+import slider2 from '../../assets/slider-image/slide2.jpg';
+import slider3 from '../../assets/slider-image/slide3.jpg';
+import slider4 from '../../assets/slider-image/slide4.jpg';
+import slider5 from '../../assets/slider-image/slide5.jpg';
+
 
 const Slider = () => {
   return (
