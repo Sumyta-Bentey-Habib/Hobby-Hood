@@ -5,6 +5,7 @@ import Slider from '../components/slider/Slider';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
+import Faq from '../components/Faq';
 
 const HomeLayout = () => {
     return (
@@ -14,9 +15,8 @@ const HomeLayout = () => {
             <Slider className="mt-2"></Slider>
             <Outlet></Outlet>
             <Card></Card>
-            <Footer></Footer>
-
-            
+            <Faq></Faq>
+            <Footer></Footer>    
         </div>
     );
 };
