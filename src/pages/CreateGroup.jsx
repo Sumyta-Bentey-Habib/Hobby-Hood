@@ -8,16 +8,27 @@ const CreateGroup = () => {
     const form = e.target;
     const formData = new FormData(form);
     const groupData = Object.fromEntries(formData.entries());
-    console.log(groupData);
 
-    fetch("http://localhost:3000/create-group", {
+    // Map form fields to backend expected fields
+    const formattedData = {
+      name: groupData.groupName,
+      description: groupData.purpose,
+      hobbies: groupData.groupCategory
+        ? groupData.groupCategory.split(",").map((hobby) => hobby.trim())
+        : [],
+    };
+
+    fetch("http://localhost:3000/api/groups", {  
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(groupData),
+      body: JSON.stringify(formattedData), 
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to create group");
+        return res.json();
+      })
       .then((data) => {
         console.log("Group created:", data);
         Swal.fire({
@@ -57,7 +68,7 @@ const CreateGroup = () => {
           <label className="label font-semibold">Group Name</label>
           <input
             type="text"
-            name="groupName"
+            name="groupName"  // form field name stays this for UX, mapped internally
             className="input input-bordered w-full"
             placeholder="Enter your group name"
             required
@@ -70,7 +81,7 @@ const CreateGroup = () => {
             type="text"
             name="groupCategory"
             className="input input-bordered w-full"
-            placeholder="Enter your group category"
+            placeholder="Enter your group category (comma separated)"
             required
           />
         </fieldset>
@@ -93,7 +104,7 @@ const CreateGroup = () => {
             name="location"
             className="input input-bordered w-full"
             placeholder="Enter your group location"
-            required
+            // This field isn't sent to backend since it's not in schema, you can extend if needed
           />
         </fieldset>
 

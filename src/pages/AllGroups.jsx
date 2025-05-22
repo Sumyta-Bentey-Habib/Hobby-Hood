@@ -1,32 +1,35 @@
-import { useEffect, useState } from 'react';
-import NavBar from '../components/NavBar';
+import React, { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
 
 const AllGroups = () => {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    fetch('/api/groups')
-      .then(res => res.json())
-      .then(data => setGroups(data))
-      .catch(err => console.error(err));
+    fetch("http://localhost:3000/api/groups")  // Use your actual backend route
+      .then((res) => res.json())
+      .then((data) => setGroups(data))
+      .catch((err) => console.error("Error fetching all groups:", err));
   }, []);
 
   return (
-    <div className="p-4">
-        <NavBar></NavBar>
-      <h2 className="text-2xl font-bold mb-4">All Hobby Groups</h2>
-      {groups.length === 0 ? (
-        <p>No groups available yet.</p>
-      ) : (
-        <ul className="grid gap-4 md:grid-cols-2">
-          {groups.map(group => (
-            <li key={group._id} className="border p-4 rounded shadow">
-              <h3 className="text-lg font-semibold">{group.name}</h3>
-              <p>{group.description}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="min-h-screen bg-base-100">
+      <NavBar />
+      <div className="text-center mt-10">
+        <h1 className="text-4xl font-bold text-primary">Explore All Hobby Groups</h1>
+      </div>
+      <div className="max-w-6xl mx-auto p-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {groups.length === 0 && (
+          <p className="text-center col-span-full">No groups found.</p>
+        )}
+        {groups.map((group) => (
+          <div key={group._id} className="card bg-base-200 p-4 rounded-box shadow">
+            <h2 className="font-bold text-lg">{group.name}</h2>
+            <p><strong>Description:</strong> {group.description || "N/A"}</p>
+            <p><strong>Hobbies:</strong> {group.hobbies && group.hobbies.length > 0 ? group.hobbies.join(", ") : "None"}</p>
+            <p><strong>Created At:</strong> {new Date(group.createdAt).toLocaleDateString()}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
