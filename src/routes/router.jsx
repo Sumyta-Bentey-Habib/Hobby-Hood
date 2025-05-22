@@ -7,6 +7,7 @@ import SigninSignup from "../pages/SigninSignup";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "../components/PrivateRoute";
 import HomeLayout from "../layouts/HomeLayout";
+import CreateGroup from "../pages/CreateGroup";
 
 const router = createBrowserRouter([
   { 
@@ -16,13 +17,21 @@ const router = createBrowserRouter([
     path: "/", element: <Home /> 
   },
   { 
-    path: "/allgroups", element: <AllGroups />
+    path: "/all-groups", element: <AllGroups />
  },
   {
-    path: "/mygroups",
+    path: "/my-groups",
     element: (
       <PrivateRoute>
         <MyGroups />
+      </PrivateRoute>
+    ),
+  },
+  {
+   path:"/create-group",
+   element: (
+      <PrivateRoute>
+        <CreateGroup />
       </PrivateRoute>
     ),
   },

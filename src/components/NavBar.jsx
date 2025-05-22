@@ -31,7 +31,6 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm rounded-3xl sticky top-0 z-50">
       <div className="navbar-start">
-        {/* Your existing dropdown code here */}
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -49,14 +48,17 @@ const NavBar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/allgroups">All Groups</NavLink>
-            </li>
-            <li>
-              <NavLink to="/mygroups">My Groups</NavLink>
-            </li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/all-groups">All Groups</NavLink>
+          </li>
+          <li>
+            <NavLink to="/my-groups">My Groups</NavLink>
+          </li>
+           <li>
+            <NavLink to="/create-group">Create Group</NavLink>
+          </li>
           </ul>
         </div>
         <a className="btn-ghost text-xl">Hobby Hood</a>
@@ -68,10 +70,13 @@ const NavBar = () => {
             <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/allgroups">All Groups</NavLink>
+            <NavLink to="/all-groups">All Groups</NavLink>
           </li>
           <li>
-            <NavLink to="/mygroups">My Groups</NavLink>
+            <NavLink to="/my-groups">My Groups</NavLink>
+          </li>
+           <li>
+            <NavLink to="/create-group">Create Group</NavLink>
           </li>
         </ul>
       </div>
