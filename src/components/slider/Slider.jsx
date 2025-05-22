@@ -4,17 +4,14 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './slider.css';
-
 import slider1 from '../../assets/slider-image/slide1.jpg';
 import slider2 from '../../assets/slider-image/slide2.jpg';
 import slider3 from '../../assets/slider-image/slide3.jpg';
 import slider4 from '../../assets/slider-image/slide4.jpg';
 import slider5 from '../../assets/slider-image/slide5.jpg';
-
-
 const Slider = () => {
   return (
-    <div className='bg-indigo-300'>
+    <div className='bg-indigo-200'>
       <h1 className='text-center text-bold text-5xl text-black p-10' >Fun and Social Angle</h1>
       <p className='text-center'>Hobbies aren't just about <br /> solo enjoyment — they often bring people together. Joining a book club or a sports team can turn <br />a personal interest into a shared experience, helping build connections and friendships.</p>
       <div className="pt-24 px-4 max-w-6xl mx-auto">

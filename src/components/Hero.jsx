@@ -18,7 +18,7 @@ const Hero = () => {
           <p className="mb-5">
             Hobbies are an essential part of life that bring joy, relaxation, and a sense of fulfillment. Whether it's painting, reading, gardening, or playing music, hobbies allow us to express ourselves and explore our passions outside of work or study.
           </p>
-          <NavLink to='/allgroups'
+          <NavLink to='/all-groups'
           className="btn btn-primary">Let's Explore <FaLongArrowAltRight />
           </NavLink>
         </div>
