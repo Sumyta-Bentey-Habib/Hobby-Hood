@@ -7,44 +7,30 @@ const CreateGroup = () => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const groupData = Object.fromEntries(formData.entries());
+    const newHobby = Object.fromEntries(formData.entries());
+    console.log(newHobby);
 
-    // Map form fields to backend expected fields
-    const formattedData = {
-      name: groupData.groupName,
-      description: groupData.purpose,
-      hobbies: groupData.groupCategory
-        ? groupData.groupCategory.split(",").map((hobby) => hobby.trim())
-        : [],
-    };
-
-    fetch("http://localhost:3000/api/groups", {  
-      method: "POST",
-      headers: {
+    //sending data to the server
+    fetch("http://localhost:3000/hobbies",{
+      method:"POST",
+      headers:{
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formattedData), 
+      body: JSON.stringify(newHobby),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to create group");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Group created:", data);
+    .then((res)=> res.json())
+    .then((data)=>{
+      console.log(data);
+      if(data.insertedId){
         Swal.fire({
-          title: "Group created successfully!",
+          title: "Success!",
+          text: "Your group has been created successfully.",
           icon: "success",
+          confirmButtonText: "OK",
         });
         form.reset();
-      })
-      .catch((err) => {
-        console.error("Error creating group:", err);
-        Swal.fire({
-          title: "Error",
-          text: "Failed to create group",
-          icon: "error",
-        });
-      });
+      }
+    });
   };
 
   return (
@@ -68,7 +54,7 @@ const CreateGroup = () => {
           <label className="label font-semibold">Group Name</label>
           <input
             type="text"
-            name="groupName"  // form field name stays this for UX, mapped internally
+            name="groupName"
             className="input input-bordered w-full"
             placeholder="Enter your group name"
             required
@@ -104,7 +90,16 @@ const CreateGroup = () => {
             name="location"
             className="input input-bordered w-full"
             placeholder="Enter your group location"
-            // This field isn't sent to backend since it's not in schema, you can extend if needed
+          />
+        </fieldset>
+
+        <fieldset className="bg-base-200 border border-base-300 rounded-box p-4 md:col-span-2">
+          <label className="label font-semibold">Group Image URL</label>
+          <input
+            type="url"
+            name="imageUrl"
+            className="input input-bordered w-full"
+            placeholder="Enter image URL for your group"
           />
         </fieldset>
 

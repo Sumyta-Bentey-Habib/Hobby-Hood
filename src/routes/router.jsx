@@ -17,7 +17,9 @@ const router = createBrowserRouter([
     path: "/", element: <Home /> 
   },
   { 
-    path: "/all-groups", element: <AllGroups />
+    path: "/all-groups", 
+    loader: () => fetch("http://localhost:3000/hobbies"),
+    element: <AllGroups />
  },
   {
     path: "/my-groups",
