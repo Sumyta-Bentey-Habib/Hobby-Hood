@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   },
   { 
     path: "/all-groups", 
-    loader: () => fetch("http://localhost:3000/hobbies"),
+    loader: () => fetch("https://hobby-hood-server-site.vercel.app/hobbies"),
     element: <AllGroups />
   },
   {

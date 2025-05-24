@@ -1,12 +1,16 @@
-# React + Vite
+# 🎨 Hobby Hood
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Hobby Hood** — a fun and interactive web platform where users can explore various hobby-based groups, connect with like-minded individuals, and manage their own groups with ease!
 
-Currently, two official plugins are available:
+🌐 **Live Site:** [https://hobby-hood-1d7f6.web.app/](https://hobby-hood-1d7f6.web.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🔍 **Explore Groups**: Browse and discover a wide range of hobby groups (art, music, gaming, fitness, etc.).
+- ➕ **Save Groups**: Save existing hobby groups to your personal collection.
+- ✏️ **Edit Groups**: Modify details of the groups you’ve saved or created.
+- 🗑️ **Delete Groups**: Remove saved groups if they no longer match your interests.
+- 👤 **User Authentication**: Secure login via email/password or Google account (powered by Firebase).
+- 🔐 **Private Dashboard**: Each user can manage their own collection in the "My Groups" section.

@@ -28,7 +28,7 @@ const MyGroups = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/my-groups?userEmail=${user.email}`
+        `https://hobby-hood-server-site.vercel.app/my-groups?userEmail=${user.email}`
       );
 
       if (!response.ok) {
@@ -69,7 +69,7 @@ const MyGroups = () => {
       try {
         setDeletingId(id);
         const response = await fetch(
-          `http://localhost:3000/my-groups/${id}?userEmail=${user.email}`,
+          `https://hobby-hood-server-site.vercel.app/my-groups/${id}?userEmail=${user.email}`,
           {
             method: "DELETE",
           }

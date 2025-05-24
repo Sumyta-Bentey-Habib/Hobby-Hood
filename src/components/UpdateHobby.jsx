@@ -30,7 +30,7 @@ const UpdateHobby = () => {
     async function fetchGroup() {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:3000/my-groups?userEmail=${user.email}`);
+        const res = await fetch(`https://hobby-hood-server-site.vercel.app/my-groups?userEmail=${user.email}`);
         if (!res.ok) throw new Error("Failed to fetch groups");
 
         const groups = await res.json();
@@ -70,7 +70,7 @@ const UpdateHobby = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:3000/my-groups/${id}?userEmail=${user.email}`, {
+      const res = await fetch(`https://hobby-hood-server-site.vercel.app/my-groups/${id}?userEmail=${user.email}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

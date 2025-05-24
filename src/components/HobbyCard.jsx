@@ -20,7 +20,7 @@ const HobbyCard = ({ hobby }) => {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:3000/my-groups?userEmail=${user.email}`)
+    fetch(`https://hobby-hood-server-site.vercel.app/my-groups?userEmail=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         const alreadyExists = data.some((item) => item._id === _id);
@@ -43,7 +43,7 @@ const HobbyCard = ({ hobby }) => {
     // Send the hobby data + user email
     const payload = { ...hobby, userEmail: user.email };
 
-    fetch("http://localhost:3000/my-groups", {
+    fetch("https://hobby-hood-server-site.vercel.app/my-groups", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
