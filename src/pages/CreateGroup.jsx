@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 const hobbyCategories = [
   "Drawing & Painting",
@@ -12,7 +13,12 @@ const hobbyCategories = [
   "Cooking",
   "Reading",
   "Writing",
-  // add more as needed
+  "Gardening",
+  "Fitness",
+  "Hiking",
+  "Music",
+  "Crocheting",
+  "Others",
 ];
 
 const CreateGroup = () => {
@@ -58,7 +64,7 @@ const CreateGroup = () => {
 
       if (response.ok) {
         Swal.fire("Success", "Group created successfully!", "success");
-        navigate("/myGroups");
+        navigate("/all-groups");
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to create group");
@@ -69,6 +75,8 @@ const CreateGroup = () => {
   };
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md mt-8">
       <h2 className="text-2xl font-bold mb-6 text-indigo-700">Create New Group</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -185,6 +193,7 @@ const CreateGroup = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 
