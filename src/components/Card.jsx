@@ -1,4 +1,5 @@
 import React from "react";
+import { Typewriter } from 'react-simple-typewriter';
 import card1 from "../assets/card-images/coding.jpg";
 import card2 from "../assets/card-images/cooking.jpg";
 import card3 from "../assets/card-images/gradening.jpg";
@@ -8,7 +9,17 @@ import card6 from "../assets/card-images/photo.jpg";
 const Card = () => {
   return (
     <div className="mb-10">
-      <h1 className="text-center p-4 text-2xl">Make this year full of new experience</h1>
+      <h1 className="text-center font-bold text-5xl text-black pt-10">
+         <Typewriter
+                  words={['Make this year full of new experience']}
+                  loop={true}
+                  cursor
+                  cursorStyle="|"
+                  typeSpeed={80}
+                  deleteSpeed={50}
+                  delaySpeed={2000}
+                />
+        </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-5">
         <div className="card bg-base-100 w-96 shadow-sm">
           <figure className="px-10 pt-10">
