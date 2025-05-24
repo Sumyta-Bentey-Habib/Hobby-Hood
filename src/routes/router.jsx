@@ -8,6 +8,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import HomeLayout from "../layouts/HomeLayout";
 import CreateGroup from "../pages/CreateGroup";
 import ErrorPage from "../pages/ErrorPage"; 
+import UpdateHobby from "../components/UpdateHobby";
 
 const router = createBrowserRouter([
   { 
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
     path: "/signup", 
     element: <SignUp /> 
   },
+  {
+   path:"/update-hobby/:id" ,
+  element:<UpdateHobby />
+  },
+
   {
     path: "*",
     element: <ErrorPage />,
