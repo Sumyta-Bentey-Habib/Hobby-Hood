@@ -19,7 +19,11 @@ const NavBar = () => {
       if (result.isConfirmed) {
         logOut()
           .then(() => {
-            Swal.fire("Logged out!", "You have been successfully logged out.", "success");
+            Swal.fire(
+              "Logged out!",
+              "You have been successfully logged out.",
+              "success"
+            );
           })
           .catch((error) => {
             Swal.fire("Error!", error.message, "error");
@@ -27,7 +31,30 @@ const NavBar = () => {
       }
     });
   };
+  const links = (
+    <>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/all-groups">All Groups</NavLink>
+      </li>
 
+      {user && (
+        <>
+        <li>
+          <NavLink to="/dashboard">DashBoard</NavLink>
+        </li>
+          <li>
+            <NavLink to="/my-groups">My Groups</NavLink>
+          </li>
+          <li>
+            <NavLink to="/create-group">Create Group</NavLink>
+          </li>
+        </>
+      )}
+    </>
+  );
   return (
     <div className="navbar bg-base-100 shadow-sm rounded-3xl sticky top-0 z-50">
       <div className="navbar-start">
@@ -40,45 +67,26 @@ const NavBar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
             </svg>
           </div>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/all-groups">All Groups</NavLink>
-          </li>
-          <li>
-            <NavLink to="/my-groups">My Groups</NavLink>
-          </li>
-           <li>
-            <NavLink to="/create-group">Create Group</NavLink>
-          </li>
+            {links}
           </ul>
         </div>
         <a className="btn-ghost text-xl">Hobby Hood</a>
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/all-groups">All Groups</NavLink>
-          </li>
-          <li>
-            <NavLink to="/my-groups">My Groups</NavLink>
-          </li>
-           <li>
-            <NavLink to="/create-group">Create Group</NavLink>
-          </li>
-        </ul>
+        <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
 
       <div className="navbar-end flex items-center gap-4">

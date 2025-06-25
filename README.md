@@ -57,7 +57,7 @@ Clone and run Hobby Hood on your local machine:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/hobbyhood.git
+git clone https://github.com/Sumyta-Bentey-Habib/Hobby-Hood.git
 
 # 2. Navigate into the project folder
 cd hobbyhood-client-site

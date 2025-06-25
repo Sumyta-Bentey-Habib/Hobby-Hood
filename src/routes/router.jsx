@@ -9,6 +9,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import CreateGroup from "../pages/CreateGroup";
 import ErrorPage from "../pages/ErrorPage"; 
 import UpdateHobby from "../components/UpdateHobby";
+import Dashboard from "../components/Dashboard";
 
 const router = createBrowserRouter([
   { 
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
   {
    path:"/update-hobby/:id" ,
   element:<UpdateHobby />
+  },
+  {
+    path:"/dashboard",
+    element:<Dashboard></Dashboard>
+
   },
 
   {
