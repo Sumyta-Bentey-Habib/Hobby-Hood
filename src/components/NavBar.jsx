@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
+import { getAuth } from "firebase/auth";
 
 const NavBar = () => {
-  const { user, logOut } = useAuth();
+  const [theme, setTheme]=useState("light");
+  const auth = getAuth;
+  
+useEffect(()=>{
+  const storedTheme=localStorage.getItem("theme")|| "light";
+  setTheme(storedTheme);
+  document.documentElement.setAttribute("data-theme",storedTheme);
 
+},[auth]);
+
+const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
+
+
+
+  const { user, logOut } = useAuth();
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -111,6 +131,33 @@ const NavBar = () => {
             Log in
           </NavLink>
         )}
+        {/* Theme toggle button */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost"
+          style={{ color: "inherit" }} // ensures icon inherits text color and is visible
+          aria-label="Toggle Theme"
+        >
+          {theme === "light" ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 3.25a.75.75 0 01.75.75v1a.75.75 0 01-1.5 0v-1A.75.75 0 0110 3.25zm4.47 2.03a.75.75 0 011.06 1.06l-.71.7a.75.75 0 01-1.06-1.06l.71-.7zM16.75 10a.75.75 0 01-.75.75h-1a.75.75 0 010-1.5h1a.75.75 0 01.75.75zm-2.53 4.72a.75.75 0 10-1.06 1.06l.7.71a.75.75 0 101.06-1.06l-.7-.71zM10 15.75a.75.75 0 01.75.75v1a.75.75 0 01-1.5 0v-1a.75.75 0 01.75-.75zm-4.72-1.53a.75.75 0 10-1.06 1.06l.71.7a.75.75 0 001.06-1.06l-.7-.7zM4.25 10a.75.75 0 01.75.75h-1a.75.75 0 010-1.5h1a.75.75 0 01-.75.75zm2.53-4.72a.75.75 0 10-1.06-1.06l-.71.7a.75.75 0 001.06 1.06l.71-.7zM10 6a4 4 0 100 8 4 4 0 000-8z" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M17.293 13.293A8 8 0 116.707 2.707a8.003 8.003 0 0010.586 10.586z" />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );

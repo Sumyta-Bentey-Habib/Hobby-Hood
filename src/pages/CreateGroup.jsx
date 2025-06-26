@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
-
 const hobbyCategories = [
   "Drawing & Painting",
   "Photography",
@@ -76,7 +74,6 @@ const CreateGroup = () => {
 
   return (
     <>
-    <NavBar></NavBar>
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md mt-8">
       <h2 className="text-2xl font-bold mb-6 text-indigo-700">Create New Group</h2>
       <form onSubmit={handleSubmit} className="space-y-4">

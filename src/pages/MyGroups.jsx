@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loader from "../components/Loader";
-import NavBar from "../components/NavBar";
 
 const MyGroups = () => {
   const { user } = useAuth();
@@ -94,7 +93,6 @@ const MyGroups = () => {
 
   return (
     <>
-      <NavBar />
       <div className="p-6 max-w-7xl mx-auto" role="main">
         <h2 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">
           My Groups

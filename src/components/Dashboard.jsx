@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-
+import Loader from "../components/Loader";
 const Dashboard = () => {
   const { user } = useAuth();
   const [myGroups, setMyGroups] = useState([]);
@@ -31,10 +31,12 @@ const Dashboard = () => {
     }
   }, [user?.email]);
 
-  if (loading) return <div className="text-center mt-10 text-lg">Loading...</div>;
+  if (loading) return <div>
+    <Loader></Loader>
+  </div>;
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-md p-6 space-y-6 border-r">
         <div className="text-2xl font-extrabold text-purple-700">Hobby Hood</div>
