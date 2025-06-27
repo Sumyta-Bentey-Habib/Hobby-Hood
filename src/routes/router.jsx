@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import AllGroups from "../pages/AllGroups";
 import MyGroups from "../pages/MyGroups";
-
+import PrivateRoute from "../components/PrivateRoute";
 import HomeLayout from "../layouts/HomeLayout";
 import CreateGroup from "../pages/CreateGroup";
 import ErrorPage from "../pages/ErrorPage";
@@ -39,7 +39,13 @@ const router = createBrowserRouter([
       },
       {
         path: "create-group",
-        element: <CreateGroup />,
+        element: (
+          <PrivateRoute>
+            <CreateGroup />
+          </PrivateRoute>
+
+        ),
+        
       },
       {
         path: "/login",
