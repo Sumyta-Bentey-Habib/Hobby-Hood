@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import Faq from "../components/Faq";
 import HobbyCard from "../components/HobbyCard";
 import Loader from "../components/Loader";
-
+import { Typewriter } from "react-simple-typewriter";
 const Home = () => {
   useEffect(()=>{
     document.title="Hobby Hood"
@@ -52,7 +52,17 @@ const Home = () => {
     <div className={`${themeClass}`}>
       <Hero />
       <div className="m-10">
-        <h2 className="mb-6 text-4xl font-bold text-center">All Groups</h2>
+        <h1 className="mb-6 text-4xl font-bold text-center md:text-5xl mt-20">
+                <Typewriter
+                  words={["Explore All Groups","Create your own group"]}
+                  loop
+                  cursor
+                  cursorStyle="|"
+                  typeSpeed={100}
+                  deleteSpeed={20}
+                  delaySpeed={1000}
+                />
+              </h1>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {hobbies && hobbies.length > 0 ? (
             hobbies.slice(0, 3).map((hobby) => (
