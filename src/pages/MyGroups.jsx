@@ -5,11 +5,65 @@ import Swal from "sweetalert2";
 import Loader from "../components/Loader";
 
 const MyGroups = () => {
+  useEffect(()=>{
+    document.title="My Groups || Hobby Hood";
+  },[]);
   const { user } = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState(null);
+
+ 
+  const [themeClasses, setThemeClasses] = useState({
+    pageBg: "bg-gray-100",
+    cardBg: "bg-white",
+    textPrimary: "text-gray-800",
+    textSecondary: "text-gray-700",
+    textAccent: "text-indigo-600",
+    btnEditBg: "bg-blue-600 hover:bg-blue-700",
+    btnRemoveBg: "bg-red-600 hover:bg-red-700",
+    btnRemoveDisabledBg: "bg-gray-400",
+  });
+
+  useEffect(() => {
+    const updateThemeClasses = () => {
+      const theme = document.documentElement.getAttribute("data-theme");
+      if (theme === "dark") {
+        setThemeClasses({
+          pageBg: "bg-gray-950",
+          cardBg: "bg-gray-800",
+          textPrimary: "text-gray-100",
+          textSecondary: "text-gray-300",
+          textAccent: "text-indigo-400",
+          btnEditBg: "bg-blue-500 hover:bg-blue-600",
+          btnRemoveBg: "bg-red-500 hover:bg-red-600",
+          btnRemoveDisabledBg: "bg-gray-600",
+        });
+      } else {
+        setThemeClasses({
+          pageBg: "bg-gray-100",
+          cardBg: "bg-white",
+          textPrimary: "text-gray-800",
+          textSecondary: "text-gray-700",
+          textAccent: "text-indigo-600",
+          btnEditBg: "bg-blue-600 hover:bg-blue-700",
+          btnRemoveBg: "bg-red-600 hover:bg-red-700",
+          btnRemoveDisabledBg: "bg-gray-400",
+        });
+      }
+    };
+
+    updateThemeClasses();
+
+    const observer = new MutationObserver(updateThemeClasses);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -92,80 +146,76 @@ const MyGroups = () => {
   if (loading) return <Loader />;
 
   return (
-    <>
-      <div className="p-6 max-w-7xl mx-auto" role="main">
-        <h2 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">
-          My Groups
-        </h2>
-        {data.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg mt-10">
-            You haven't added any groups yet.
-          </p>
-        ) : (
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {data.map((group) => (
-              <div
-                key={group._id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-2xl"
-              >
-                {/* Group Image */}
-                <div className="h-48 w-full overflow-hidden">
-                  <img
-                    src={
-                      group.imageUrl ||
-                      "https://via.placeholder.com/400x192?text=No+Image"
-                    }
-                    alt={group.groupName}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {group.groupName}
-                  </h3>
-                  <p className="text-indigo-600 font-medium mb-1">
-                    Category: {group.groupCategory}
-                  </p>
-
-                  <p className="text-gray-700 mb-1">
-                    <strong>Location:</strong> {group.meetingLocation || "N/A"}
-                  </p>
-
-                  <p className="text-gray-700 mb-4">
-                    <strong>Start Date:</strong> {formatDate(group.startDate)}
-                  </p>
-
-                  {/* Edit button */}
-                  <button
-                    onClick={() => navigate(`/update-hobby/${group._id}`)}
-                    className="inline-block mr-3 px-5 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white transition"
-                    aria-label={`Edit group ${group.groupName}`}
-                  >
-                    Edit
-                  </button>
-
-                  {/* Remove button */}
-                  <button
-                    onClick={() => handleDelete(group._id)}
-                    disabled={deletingId === group._id}
-                    className={`inline-block px-5 py-2 rounded-md transition ${
-                      deletingId === group._id
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-red-600 hover:bg-red-700 text-white"
-                    }`}
-                    aria-label={`Remove group ${group.groupName}`}
-                  >
-                    {deletingId === group._id ? "Removing..." : "Remove"}
-                  </button>
-                </div>
+    <main className={`${themeClasses.pageBg} p-6 mx-auto`}>
+      <h2
+        className={`text-3xl font-extrabold mb-6 text-center text-indigo-700`}
+      >
+        My Groups
+      </h2>
+      {data.length === 0 ? (
+        <p className={`${themeClasses.textSecondary} text-center text-lg mt-10`}>
+          You haven't added any groups yet.
+        </p>
+      ) : (
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {data.map((group) => (
+            <div
+              key={group._id}
+              className={`${themeClasses.cardBg} rounded-xl shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-2xl`}
+            >
+              <div className="w-full h-48 overflow-hidden">
+                <img
+                  src={
+                    group.imageUrl ||
+                    "https://via.placeholder.com/400x192?text=No+Image"
+                  }
+                  alt={group.groupName}
+                  className="object-cover w-full h-full"
+                />
               </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </>
+
+              <div className="p-5">
+                <h3 className={`${themeClasses.textPrimary} text-xl font-semibold mb-2`}>
+                  {group.groupName}
+                </h3>
+                <p className={`${themeClasses.textAccent} font-medium mb-1`}>
+                  Category: {group.groupCategory}
+                </p>
+
+                <p className={`${themeClasses.textSecondary} mb-1`}>
+                  <strong>Location:</strong> {group.meetingLocation || "N/A"}
+                </p>
+
+                <p className={`${themeClasses.textSecondary} mb-4`}>
+                  <strong>Start Date:</strong> {formatDate(group.startDate)}
+                </p>
+
+                <button
+                  onClick={() => navigate(`/update-hobby/${group._id}`)}
+                  className={`inline-block mr-3 px-5 py-2 rounded-md text-white transition ${themeClasses.btnEditBg}`}
+                  aria-label={`Edit group ${group.groupName}`}
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => handleDelete(group._id)}
+                  disabled={deletingId === group._id}
+                  className={`inline-block px-5 py-2 rounded-md transition ${
+                    deletingId === group._id
+                      ? `${themeClasses.btnRemoveDisabledBg} cursor-not-allowed`
+                      : `${themeClasses.btnRemoveBg} text-white`
+                  }`}
+                  aria-label={`Remove group ${group.groupName}`}
+                >
+                  {deletingId === group._id ? "Removing..." : "Remove"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
   );
 };
 

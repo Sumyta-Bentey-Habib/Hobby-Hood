@@ -2,13 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import AllGroups from "../pages/AllGroups";
 import MyGroups from "../pages/MyGroups";
-import SigninSignup from "../pages/SigninSignup";
-import SignUp from "../pages/SignUp";
+
 import HomeLayout from "../layouts/HomeLayout";
 import CreateGroup from "../pages/CreateGroup";
 import ErrorPage from "../pages/ErrorPage";
 import UpdateHobby from "../components/UpdateHobby";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../pages/Dashboard";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import AboutPage from "../pages/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -31,16 +33,21 @@ const router = createBrowserRouter([
         element: <MyGroups />,
       },
       {
+        path: "/about",
+        element:<AboutPage></AboutPage>
+
+      },
+      {
         path: "create-group",
         element: <CreateGroup />,
       },
       {
-        path: "sign-in-sign-up",
-        element: <SigninSignup />,
+        path: "/login",
+        element:<Login></Login>,
       },
       {
-        path: "signup",
-        element: <SignUp />,
+        path: "/register",
+        element: <Register></Register>,
       },
       {
         path: "update-hobby/:id",

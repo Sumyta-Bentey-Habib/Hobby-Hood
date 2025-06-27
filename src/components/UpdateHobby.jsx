@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import Loader from "../components/Loader";
-import NavBar from "../components/NavBar";
 
 const UpdateHobby = () => {
-  const { id } = useParams(); // group id from URL param
+  const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,7 +18,42 @@ const UpdateHobby = () => {
     imageUrl: "",
   });
 
-  // Fetch group data to pre-fill the form
+  // Theme classes for container and inputs
+  const [themeClass, setThemeClass] = useState({
+    pageBg: "bg-gray-100",
+    container: "bg-white text-gray-900 border-gray-300",
+    input: "bg-white text-gray-900 border-gray-300",
+  });
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = document.documentElement.getAttribute("data-theme");
+      if (theme === "dark") {
+        setThemeClass({
+          pageBg: "bg-gray-950",
+          container: "bg-gray-800 text-gray-100 border-gray-600",
+          input: "bg-gray-800 text-gray-100 border-gray-600",
+        });
+      } else {
+        setThemeClass({
+          pageBg: "bg-gray-100",
+          container: "bg-white text-gray-900 border-gray-300",
+          input: "bg-white text-gray-900 border-gray-300",
+        });
+      }
+    };
+
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!user?.email) {
       Swal.fire("Error", "You must be logged in to update groups.", "error");
@@ -30,7 +64,9 @@ const UpdateHobby = () => {
     async function fetchGroup() {
       try {
         setLoading(true);
-        const res = await fetch(`https://hobby-hood-server-site.vercel.app/my-groups?userEmail=${user.email}`);
+        const res = await fetch(
+          `https://hobby-hood-server-site.vercel.app/my-groups?userEmail=${user.email}`
+        );
         if (!res.ok) throw new Error("Failed to fetch groups");
 
         const groups = await res.json();
@@ -70,11 +106,14 @@ const UpdateHobby = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`https://hobby-hood-server-site.vercel.app/my-groups/${id}?userEmail=${user.email}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        `https://hobby-hood-server-site.vercel.app/my-groups/${id}?userEmail=${user.email}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      );
 
       if (res.ok) {
         Swal.fire("Success", "Group updated successfully", "success");
@@ -92,78 +131,42 @@ const UpdateHobby = () => {
   if (loading) return <Loader />;
 
   return (
-    <>
-      <NavBar />
-      <div className="max-w-xl mx-auto p-6 bg-white rounded shadow mt-8">
-        <h2 className="text-2xl font-bold mb-6 text-indigo-700">Update Hobby Group</h2>
+    <main className={`${themeClass.pageBg} min-h-screen flex items-center justify-center p-6`}>
+      <div
+        className={`max-w-xl w-full p-6 rounded shadow border ${themeClass.container}`}
+      >
+        <h2 className="mb-6 text-2xl font-bold text-indigo-700">Update Hobby Group</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block">
-            <span className="text-gray-700">Group Name</span>
-            <input
-              type="text"
-              name="groupName"
-              value={form.groupName}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-gray-700">Category</span>
-            <input
-              type="text"
-              name="groupCategory"
-              value={form.groupCategory}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-gray-700">Meeting Location</span>
-            <input
-              type="text"
-              name="meetingLocation"
-              value={form.meetingLocation}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-gray-700">Start Date</span>
-            <input
-              type="date"
-              name="startDate"
-              value={form.startDate}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-gray-700">Image URL</span>
-            <input
-              type="url"
-              name="imageUrl"
-              value={form.imageUrl}
-              onChange={handleChange}
-              placeholder="https://example.com/image.jpg"
-              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </label>
+          {[
+            { label: "Group Name", name: "groupName", type: "text", required: true },
+            { label: "Category", name: "groupCategory", type: "text", required: true },
+            { label: "Meeting Location", name: "meetingLocation", type: "text" },
+            { label: "Start Date", name: "startDate", type: "date" },
+            { label: "Image URL", name: "imageUrl", type: "url", placeholder: "https://example.com/image.jpg" },
+          ].map(({ label, name, type, required, placeholder }) => (
+            <label key={name} className="block">
+              <span className={`text-gray-700 dark:text-gray-300`}>{label}</span>
+              <input
+                type={type}
+                name={name}
+                value={form[name]}
+                onChange={handleChange}
+                required={required}
+                placeholder={placeholder}
+                className={`mt-1 block w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${themeClass.input}`}
+              />
+            </label>
+          ))}
 
           <button
             type="submit"
-            className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition"
+            className="px-6 py-2 text-white transition bg-indigo-600 rounded hover:bg-indigo-700"
           >
             Update Group
           </button>
         </form>
       </div>
-    </>
+    </main>
   );
 };
 

@@ -17,6 +17,30 @@ const HobbyCard = ({ hobby }) => {
   const [isAdded, setIsAdded] = useState(false);
   const { user } = useAuth();
 
+  // Theme-related state
+  const [themeClass, setThemeClass] = useState("bg-white text-gray-800");
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = document.documentElement.getAttribute("data-theme");
+      if (theme === "dark") {
+        setThemeClass("bg-gray-800 text-gray-100");
+      } else {
+        setThemeClass("bg-white text-gray-800");
+      }
+    };
+
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!user) return;
 
@@ -40,7 +64,6 @@ const HobbyCard = ({ hobby }) => {
       return;
     }
 
-    // Send the hobby data + user email
     const payload = { ...hobby, userEmail: user.email };
 
     fetch("https://hobby-hood-server-site.vercel.app/my-groups", {
@@ -74,42 +97,41 @@ const HobbyCard = ({ hobby }) => {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className="w-96 rounded-2xl overflow-hidden shadow-xl bg-white transition-all duration-300 hover:shadow-2xl"
+      className={`${themeClass} w-full rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl`}
     >
-      <div className="h-60">
+      <div className="w-full h-48 overflow-hidden">
         <img
           src={imageUrl}
           alt={groupName}
-          className="w-full h-full object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
 
       <div className="p-5 space-y-3">
-        <h2 className="text-xl font-semibold text-center text-gray-800">
-          {groupName}
-        </h2>
+        <h2 className="text-xl font-semibold text-center">{groupName}</h2>
 
-        <div className="flex items-center gap-2 text-sm text-gray-700">
+        <div className="flex items-center gap-2 text-sm">
           <FaClipboardList className="text-red-400" />
           <span>
             <strong>Category:</strong> {groupCategory}
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-700">
+        <div className="flex items-center gap-2 text-sm">
           <FaMapMarkerAlt className="text-red-400" />
           <span>
             <strong>Location:</strong> {meetingLocation}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-700">
+
+        <div className="flex items-center gap-2 text-sm">
           <FaMapMarkerAlt className="text-red-400" />
           <span>
             <strong>Max Member:</strong> {maxMembers}
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-700">
+        <div className="flex items-center gap-2 text-sm">
           <FaBullseye className="text-red-400" />
           <span>
             <strong>Purpose:</strong> {description}
@@ -120,9 +142,7 @@ const HobbyCard = ({ hobby }) => {
           onClick={handleAddToMyGroups}
           disabled={isAdded}
           className={`w-full py-2 rounded-md mt-3 font-semibold text-white ${
-            isAdded
-              ? "bg-green-600 cursor-not-allowed"
-              : "bg-red-500 hover:bg-red-600"
+            isAdded ? "bg-green-600 cursor-not-allowed" : "bg-red-500 hover:bg-red-600"
           }`}
         >
           {isAdded ? "Added to My Groups" : "Add to My Groups"}

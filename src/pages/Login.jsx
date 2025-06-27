@@ -1,40 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../firebase/firebase.config";
-import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import Swal from "sweetalert2";
-import bgsignup from "../assets/images/bgsingup.jpg";
+import { useNavigate, NavLink } from "react-router-dom";
+import bgsignin from "../assets/images/bgsignin.jpg";
 import { Typewriter } from "react-simple-typewriter";
 import { FaHome } from "react-icons/fa";
 
-const Register = () => {
+
+const Login = () => {
   useEffect(()=>{
-    document.title="Register || Hobby Hood";
+    document.title="Log In || Hobby Hood";
   },[]);
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    
-      await updateProfile(userCredential.user, {
-        displayName: name,
-      });
-      Swal.fire("Success", "Account created successfully!", "success");
+      await signInWithEmailAndPassword(auth, email, password);
+      Swal.fire("Success", "Logged in successfully!", "success");
       navigate("/");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
   };
 
-  const handleGoogleRegister = async () => {
+  const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      Swal.fire("Success", "Google Sign-Up successful!", "success");
+      Swal.fire("Success", "Google Sign-In successful!", "success");
       navigate("/");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
@@ -45,64 +41,54 @@ const Register = () => {
     <div
       className="relative flex items-center justify-center min-h-screen p-6"
       style={{
-        backgroundImage: `url(${bgsignup})`,
+        backgroundImage: `url(${bgsignin})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-black/60"></div>
-      <div className="relative z-10 w-full max-w-md p-8 text-center shadow-lg bg-white/10 backdrop-blur-sm rounded-xl">
-        <h2 className="mb-4 text-4xl font-extrabold text-white">Join Us!</h2>
-        <p className="mb-6 text-indigo-200">
+      <div className="absolute inset-0 bg-black/70"></div>
+      <div className="relative z-10 w-full max-w-md p-8 bg-white/10 backdrop-blur-sm rounded-xl">
+        <h2 className="mb-6 text-3xl font-bold text-center text-white">
+          Welcome Back!
+        </h2>
+        <p className="mb-4 font-semibold text-center text-indigo-200">
           <Typewriter
             words={[
-              "Create your account.",
-              "Discover new hobbies.",
-              "Connect with passionate people.",
+              "Log in to continue exploring.",
+              "Your hobbies await!",
+              "Start where you left off.",
             ]}
             loop={true}
             cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1500}
+            cursorStyle="_"
+            typeSpeed={60}
+            deleteSpeed={40}
+            delaySpeed={1800}
           />
         </p>
-
-        <form onSubmit={handleRegister} className="text-left">
-          <input
-            type="text"
-            className="w-full mb-4 input input-bordered"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+        <form onSubmit={handleLogin}>
           <input
             type="email"
             className="w-full mb-4 input input-bordered"
-            placeholder="Your Email"
-            value={email}
+            placeholder="Enter your email"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
             className="w-full mb-6 input input-bordered"
-            placeholder="Create Password"
-            value={password}
+            placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button type="submit" className="w-full mb-4 btn btn-primary">
-            Register
+            Login
           </button>
         </form>
 
-        <p className="mb-4 text-white">or</p>
-
+        <p className="mb-4 text-center text-white">or</p>
         <button
-          onClick={handleGoogleRegister}
+          onClick={handleGoogleLogin}
           className="flex items-center justify-center w-full gap-2 text-black bg-white border btn hover:bg-gray-100"
         >
           <img
@@ -110,14 +96,14 @@ const Register = () => {
             alt="G"
             width="20"
           />
-          Sign up with Google
+          Sign in with Google
         </button>
 
-        <div className="mt-6">
+        <div className="mt-6 text-center">
           <p className="text-white">
-            Already have an account?{" "}
-            <NavLink to="/login" className="underline hover:text-gray-300">
-              Login Here
+            Don't have an account?{" "}
+            <NavLink to="/register" className="underline hover:text-gray-300">
+              Register Here
             </NavLink>
           </p>
           <NavLink
@@ -133,4 +119,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
